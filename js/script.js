@@ -8,14 +8,16 @@
 
 $(document).ready(
   function () {
-    var randomNumber = 0;
     var arrayRandomNumbers = [];
-    for (var i = 0; i < 5; i++) {
-      randomNumber = numberGenerator();
-      arrayRandomNumbers.push(randomNumber);
+    while (arrayRandomNumbers.length < 5) {
+      var randomNumber = numberGenerator();
+      var duplicateTest = duplicateNumber(arrayRandomNumbers, randomNumber);
+      if (duplicateTest == false) {
+        arrayRandomNumbers.push(randomNumber);
+      }
     }
-    arrayRandomNumbers.join(", ");
-    alert(arrayRandomNumbers);
+    // arrayRandomNumbers.join(", ");
+    alert("Questi sono i numeri generati automaticamente: " + arrayRandomNumbers);
   }
 );
 
@@ -24,4 +26,12 @@ function numberGenerator () {
   return number;
 }
 
-function duplicateNumber
+function duplicateNumber (array, number) {
+  var result = false;
+  for (var i = 0; i < array.length; i++) {
+    if (number == array[i]) {
+      result = true;
+    }
+  }
+  return result;
+}
