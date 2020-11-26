@@ -6,6 +6,7 @@
 // * Dividete in piccoli problemi la consegna.
 // * Individuate gli elementi di cui avete bisogno per realizzare il programma
 
+// generazione numeri casuali e alert che stampa i 5 numeri diversi
 $(document).ready(
   function () {
     var arrayRandomNumbers = [];
@@ -18,9 +19,34 @@ $(document).ready(
     }
     // arrayRandomNumbers.join(", ");
     alert("Questi sono i numeri generati automaticamente: " + arrayRandomNumbers);
-  }
+
+
+
+    // dopo 30 secondi l'utente deve inserire i numeri che ha visto precedentemente
+    // var numbersChose = setTimeout(afterThirtySeconds, 3000);
+    // console.log(afterThirtySeconds);
+
+    var userArray = [];
+    // for (var i = 0; userArray.length < 5; i++) {
+    //   setTimeout(afterThirtySeconds, 3000);
+    //   userArray.push(afterThirtySeconds);
+    // }
+    // console.log(userArray);
+
+    while (userArray.length < 5) {
+      setTimeout(afterThirtySeconds, 3000);
+      userArray.push(afterThirtySeconds);
+    }
+    console.log(userArray);
+
+
+}
 );
 
+
+
+
+// FUNZIONI
 function numberGenerator () {
   var number = Math.floor(Math.random() * 100) + 1;
   return number;
@@ -34,4 +60,14 @@ function duplicateNumber (array, number) {
     }
   }
   return result;
+}
+
+function afterThirtySeconds() {
+  // var userArray = [];
+  // for (var i = 0; userArray.length < 5; i++) {
+    var userNumber = parseInt(prompt("Inserisci i numeri che hai visto precedentemente: "));
+  //   userArray.push(userNumber);
+  // }
+  // return userArray;
+  return userNumber;
 }
