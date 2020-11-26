@@ -17,34 +17,36 @@ $(document).ready(
         arrayRandomNumbers.push(randomNumber);
       }
     }
+    console.log(arrayRandomNumbers);
     // arrayRandomNumbers.join(", ");
     alert("Questi sono i numeri generati automaticamente: " + arrayRandomNumbers);
 
-
-
     // dopo 30 secondi l'utente deve inserire i numeri che ha visto precedentemente
-    // var numbersChose = setTimeout(afterThirtySeconds, 3000);
-    // console.log(afterThirtySeconds);
-
     var userArray = [];
-    // for (var i = 0; userArray.length < 5; i++) {
-    //   setTimeout(afterThirtySeconds, 3000);
-    //   userArray.push(afterThirtySeconds);
-    // }
-    // console.log(userArray);
+    setTimeout(function() {
+      afterThirtySeconds(userArray);
+      console.log(userArray);
+    }, 3000);
 
-    while (userArray.length < 5) {
-      setTimeout(afterThirtySeconds, 3000);
-      userArray.push(afterThirtySeconds);
-    }
-    console.log(userArray);
-
-
-}
+    // una volta inseriti i 5 numeri, il software dice quanti e quali numeri sono stati ricordati.
+    var guessedNumbers = 0;
+    var guessedNumber = "";
+    setTimeout(function() {
+      var i = 0;
+      while (i < 5) {
+        var orderedArrayRandom = arrayRandomNumbers.sort();
+        var orderedUserArray = userArray.sort();
+        if (orderedArrayRandom[i] == orderedUserArray[i]) {
+          guessedNumbers = guessedNumbers + 1;
+          guessedNumber += "Numero indovinato: " + arrayRandomNumbers[i] + "\n";
+        }
+      i++;
+      }
+      console.log(guessedNumbers);
+      console.log(guessedNumber);
+    }, 3000);
+  }
 );
-
-
-
 
 // FUNZIONI
 function numberGenerator () {
@@ -62,12 +64,9 @@ function duplicateNumber (array, number) {
   return result;
 }
 
-function afterThirtySeconds() {
-  // var userArray = [];
-  // for (var i = 0; userArray.length < 5; i++) {
+function afterThirtySeconds(userArray) {
+  for (var i = 0; userArray.length < 5; i++) {
     var userNumber = parseInt(prompt("Inserisci i numeri che hai visto precedentemente: "));
-  //   userArray.push(userNumber);
-  // }
-  // return userArray;
-  return userNumber;
+    userArray.push(userNumber);
+  }
 }
