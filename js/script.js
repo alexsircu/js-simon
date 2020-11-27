@@ -8,65 +8,62 @@
 
 // generazione numeri casuali e alert che stampa i 5 numeri diversi
 $(document).ready(
-  function () {
-    var arrayRandomNumbers = [];
-    while (arrayRandomNumbers.length < 5) {
-      var randomNumber = numberGenerator();
-      var duplicateTest = duplicateNumber(arrayRandomNumbers, randomNumber);
-      if (duplicateTest == false) {
-        arrayRandomNumbers.push(randomNumber);
-      }
-    }
-    console.log(arrayRandomNumbers);
-    // arrayRandomNumbers.join(", ");
+  function () 
+  {
+    const TotalNumberToPlayTheGame = 5;
+
+    // inizializzazione dei numeri random
+    var arrayRandomNumbers = GetRandomNumbers(TotalNumberToPlayTheGame);
     alert("Questi sono i numeri generati automaticamente: " + arrayRandomNumbers);
 
     // dopo 30 secondi l'utente deve inserire i numeri che ha visto precedentemente
     var userArray = [];
     setTimeout(function() {
-      afterThirtySeconds(userArray);
-      console.log(userArray);
+      userArray = LoadUserNumbers(TotalNumberToPlayTheGame);
     }, 3000);
 
-    // una volta inseriti i 5 numeri, il software dice quanti e quali numeri sono stati ricordati.
-    var guessedNumbers = 0;
-    var guessedNumber = "";
+    // una volta inseriti i n numeri, il software dice quanti e quali numeri sono stati ricordati.
     setTimeout(function() {
-      var i = 0;
-      while (i < 5) {
-        var orderedArrayRandom = arrayRandomNumbers.sort();
-        var orderedUserArray = userArray.sort();
-        if (orderedArrayRandom[i] == orderedUserArray[i]) {
-          guessedNumbers = guessedNumbers + 1;
-          guessedNumber += "Numero indovinato: " + arrayRandomNumbers[i] + "\n";
-        }
-      i++;
-      }
-      console.log(guessedNumbers);
-      console.log(guessedNumber);
+      var sameNumbers = GetSameNumbers(arrayRandomNumbers, userArray);
+      alert("Hai indovinato: " + sameNumbers.length + " numeri\n" + "Numero/i indovinato/i: " + sameNumbers);
     }, 3000);
   }
 );
 
 // FUNZIONI
-function numberGenerator () {
-  var number = Math.floor(Math.random() * 100) + 1;
-  return number;
-}
+function GetRandomNumbers (numberOfNumbers) {
+  let totalNumbers = [];
 
-function duplicateNumber (array, number) {
-  var result = false;
-  for (var i = 0; i < array.length; i++) {
-    if (number == array[i]) {
-      result = true;
+  for (let i = 0; i < numberOfNumbers; i++) 
+  {
+    var randomNumber;
+    while(true)
+    {
+      randomNumber = Math.floor(Math.random() * 100) + 1;
+      if(!totalNumbers.includes(randomNumber))
+        break;
     }
+    
+    totalNumbers.push(randomNumber);
   }
-  return result;
+
+  return totalNumbers;
 }
 
-function afterThirtySeconds(userArray) {
-  for (var i = 0; userArray.length < 5; i++) {
-    var userNumber = parseInt(prompt("Inserisci i numeri che hai visto precedentemente: "));
+function LoadUserNumbers(numberOfNumbers) {
+  var userArray = [];
+  while(userArray.length < numberOfNumbers) {
+    var userNumber = parseInt(prompt("Inserisci un numero che hai visto precedentemente: "));
     userArray.push(userNumber);
   }
+  return userArray;
+}
+
+function GetSameNumbers(firstList, secondList) {
+  var sameNubers = [];
+  for (let i = 0; i < secondList.length - 1; i++) {
+    if(firstList.includes(secondList[i]))
+      sameNubers.push(secondList[i]);
+  } 
+  return sameNubers;
 }
